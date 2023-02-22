@@ -1,4 +1,4 @@
-##build base petmed image with necessary
+##build base blackjack image with necessary
 ##node packages found in package.json
 
 FROM node:latest
