@@ -1,0 +1,12 @@
+##build base petmed image with necessary
+##node packages found in package.json
+
+FROM node:latest
+LABEL Drew Durham (coledurham@gmail.com)
+LABEL project=blackjack
+LABEL tag=base
+WORKDIR /app/code
+COPY code/package.json .
+COPY code/webpack.config.js .
+RUN npm install
+CMD ["bash"]

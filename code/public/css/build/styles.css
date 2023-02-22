@@ -1,0 +1,334 @@
+:root {
+  --primary-light-hsl: 200, 100%, 91%;
+  --primary-dark-hsl:200, 100%, 6%;
+  --success-hsl:100, 60%, 50%;
+  --error-hsl:0, 60%, 50%;
+  --primary-green-hsl: 109, 89%, 24%;
+  --secondary-gray-hsl: 105, 10%, 54%;
+  --primary-gray-hsl: 300, 8%, 81%;
+  --primary-silver-hsl: 245, 239%, 248%;
+}
+
+html, body {
+  height:100%;
+  width:100%;
+}
+
+body {
+    background:linear-gradient(hsl(var(--primary-silver-hsl), 1), hsl(var(--secondary-gray-hsl), 1));
+    padding:0;
+    margin:0;
+}
+
+#container {
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+#content {
+  display:flex;
+  flex-direction:column;
+  flex-grow:1;
+}
+
+footer {
+  background-color: hsl(var(--primary-green-hsl), 1);
+  padding:40px 10px;
+  text-align: center;
+  font-size:15px;
+  font-weight: bold;
+  color:hsl(var(--primary-silver-hsl), 1);
+}
+
+#banner {
+    background-color:hsl(var(--primary-green-hsl), 1);
+    display:flex;
+    flex-flow:row nowrap;
+    align-items:center;
+    justify-content: center;
+    padding:20px 0;
+    border-radius:0 0 10px 10px;
+    box-shadow:0 0 20px 0 hsl(var(--primary-dark-hsl), .7);
+}
+
+#banner p {
+  justify-content: center;
+}
+
+/*
+* Board styles
+*/
+
+.board {
+  justify-content:center;
+  align-items: center;
+}
+
+/*
+* Player Controls styling
+*/
+
+ul.controls li {
+  text-decoration: none;
+  display:inline-block;
+}
+
+/*
+* Player Login Form
+*/
+#playerLoginContainer {
+  width:100vw;
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  flex-grow:1;
+}
+  
+#playerLoginForm {
+  --color: hsl(var(--primary-dark-hsl), .7);
+  background-color: hsl(var(--primary-dark-hsl), .7);
+  padding:30px 20px;
+  width:80%;
+  max-width:600px;
+  border-radius:20px;
+  box-shadow:0 0 20px 0 var(--color);
+}
+  
+#playerLoginForm label,
+#playerLoginForm button{
+  display:block;
+  font-weight:bold;
+  font-size:20px;
+}
+
+#playerLoginForm label,
+#playerLoginForm button{
+  color:white;
+}
+
+#playerLoginForm button {
+  border-radius:5px;
+  border:0;
+  padding:10px 0;
+  background: hsl(var(--primary-dark-hsl), 100);
+}
+
+#playerLoginForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#playerLoginForm form input {
+  border:none;
+  outline:none;
+  border-radius:5px;
+  padding:.5em;
+  font-size:1.5rem;
+}
+
+#playerLoginForm form h1{
+  text-align:center;
+  color:white;
+  font-weight:lighter;
+}
+
+#playerLoginForm form input:focus,
+#playerLoginForm form input:default {
+  box-shadow: 0 0 0 1px hsl(var(--success-hsl))
+}
+
+#playerLoginForm form input:invalid {
+  box-shadow: 0 0 0 1px hsl(var(--error-hsl))
+}
+
+#playerLoginForm form input:valid {
+  box-shadow: 0 0 0 1px hsl(var(--success-hsl))
+}
+
+
+/*
+* Form styles
+*/
+
+form label {
+  display:block;
+}
+
+
+/*
+* Landing styles
+*/
+
+#landing {
+  display:block;
+  width:100%;
+  padding:0;
+  margin:0;
+}
+
+
+/*
+* Panel styles
+*/
+
+.panel {
+  display:flex;
+  flex-flow:row wrap;
+  align-items:stretch;
+  gap:10px;
+}
+
+.panel .card {
+  margin-top:5px;
+  margin-bottom:4px;
+  padding: 15px 5px;
+  background-color:hsl(var(--primary-green-hsl), 1);;
+  border-radius:10px;
+  width:calc(50% - 20px);
+  box-shadow: -4px 0 10px 0 hsl(var(--primary-dark-hsl), .7);
+}
+
+.panel .card h1 {
+  background:none;
+}
+
+.panel .card label {
+  margin:10px 0;
+}
+
+.panel .card label input {
+  margin-left:10px;
+}
+
+.panel.full {
+  width:100%;
+}
+
+.panel.full .card {
+  width:100%;
+}
+
+.panel.full .card label input {
+  display:block;
+}
+
+
+/*
+* Splash styles
+*/
+
+.splash.panel {
+  width:80%;
+  max-width:800px;
+  margin:0 auto;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.splash.panel h2 {
+  margin-top:10px;
+}
+
+.splash.panel p{
+  font-size:20px;
+}
+
+.splash.panel a{
+  text-decoration: none;
+  display:inline-block;
+  padding-right:20px;
+  font-size:20px;
+}
+
+.splash.panel .card {
+  width:100%;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  padding:20px 10px;
+}
+
+
+/*
+* Login styles
+*/
+
+.login.panel {
+  width:80%;
+  max-width:600px;
+  margin:0 auto;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.login.panel h2 {
+  margin-top:10px;
+}
+
+.login.panel label{
+  font-size:20px;
+}
+
+.login.panel label input{
+  display:block;
+  font-size:20px;
+  border-radius:10px;
+  margin:10px 0px;
+}
+
+.login.panel button{
+  display:block;
+  font-size:20px;
+  border-radius:10px;
+  width:100%;
+  padding:15px 0;
+}
+
+.login.panel form.card {
+  width:100%;
+}
+
+
+/*
+* Registration styles
+*/
+
+.register.panel {
+  width:80%;
+  max-width:600px;
+  margin:0 auto;
+  display:flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.register.panel h2 {
+  margin-top:10px;
+}
+
+.register.panel label{
+  font-size:20px;
+}
+
+.register.panel label input{
+  display:block;
+  font-size:20px;
+  border-radius:10px;
+  margin:10px 0px;
+}
+
+.register.panel button{
+  display:block;
+  font-size:20px;
+  border-radius:10px;
+  width:100%;
+  padding:15px 0;
+}
+
+.register.panel form.card {
+  width:100%;
+}

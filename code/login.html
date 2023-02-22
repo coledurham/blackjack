@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link rel="stylesheet" href="css/styles.css" />
+		<title>
+			Blackjack Casino 1.0
+		</title>
+	</head>
+	<body>
+		<div id="container">
+			<section id="banner">
+				<p>Blackjack Casino</p>
+			</section>
+			<div id="content">
+				<div class="login panel">
+					<form class="card" action="/login" method="POST">
+						<label> Email:<input type="text" name="email" value="" required="required" pattern="[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+" title="Valid email containing @ and domain; e.g. bob@email.com." autofocus /></label>
+						<label> Password:<input type="password" name="password" value="" required="required" pattern=".{1,32}" title="Any string of characters of 32 or less." /></label>
+						<button type="submit">Login</button>
+						<a href="/register">Register</a>
+					</form>
+				</div>
+			</div>
+			<footer class="site-footer">Copyright Blackjack Inc 2023</footer>	
+		</div>
+	</body>
+</html>

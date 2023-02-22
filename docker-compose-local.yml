@@ -1,0 +1,22 @@
+version: "3.3"
+services:
+    web:
+      #build .
+      image: blackjack:local
+      command: ['node', 'app.js']
+      environment:
+        SESSION_SECRET: ${SESSION_SECRET}
+      ports:
+        - "4001:3000"
+      networks:
+        - blackjack-net 
+      volumes:
+          - ./code/public:/app/code/public
+          - blackjack:/blackjack/data
+          
+networks:
+  blackjack-net:
+    driver: bridge
+
+volumes:
+  blackjack:

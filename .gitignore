@@ -1,0 +1,4 @@
+code/public/js/build/*
+code/node_modules
+.vscode/
+.env
