@@ -24,10 +24,10 @@ remove-dangling:
 	@# note: the double dollar-sign is required because Make substitues $variables
 	@docker rmi $$(docker images -q --filter dangling=true)
 
-down:
-	@docker-compose down --remove-orphans  && docker volume rm blackjack_blackjack
+down: docker-compose-local.yml
+	@docker-compose -f docker-compose-local.yml down --remove-orphans  && docker volume rm blackjack_blackjack
 
-down-local-full:
+down-local-full: docker-compose-local.yml
 	@make down
 	@docker rmi -f $$(docker images --filter "label=project=blackjack" -aq)
 

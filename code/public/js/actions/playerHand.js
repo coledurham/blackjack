@@ -2,9 +2,9 @@
 
 import { ActionTypes as types} from '../constants'
 
-export const updatePlayerHand = (card) => {
+export const dealCard = (player) => {
     return {
         type: types.UPDATE_HAND,
-        data: { card, player: 1}
+        data: { player}
     }
 }

@@ -3,6 +3,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
+import { gameMiddleware } from '../middleware/gameMiddleware'
 
 import rootReducer from '../reducers/index'
 
@@ -12,7 +13,7 @@ const logger = createLogger({
 
 const store = createStore(
     rootReducer,
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk, logger, gameMiddleware)
 )
 
 export default store

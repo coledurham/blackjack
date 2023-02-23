@@ -3,11 +3,10 @@
 import React from 'react'
 
 const Card = ({card}) => {
-
-  return <div>
+  return (<li className="card">
     <h1>{card.face}</h1>
     <p>{card.suit}</p>
-  </div>
+  </li>)
 }
 
 export default Card

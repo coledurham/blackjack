@@ -21,26 +21,6 @@ import Footer from './components/footer'
 const App = () => {
   const { user, setUser } = useAuth()
 
-  useEffect(() => {
-    setTimeout(() => {
-      setUser({
-        id: 1,
-        first_name: 'Bobby',
-        last_name: 'Bouche',
-        email: 'bobby@bouche.com',
-        password: 'password'
-        })
-    }, 500)
-
-    /*axios
-    .get('/verifyCredentials')
-    .then((resp) => {
-      setUser(resp.data)
-    })*/
-
-    //setUser(user)
-  }, [])
-
   return (!user ?
           (<>
             <Splash />

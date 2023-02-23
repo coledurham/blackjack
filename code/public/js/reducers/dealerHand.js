@@ -6,20 +6,21 @@ const defaultState = {
     hand: []
 }
 
-const playerHand = (state=defaultState, action) => {
+const dealerHand = (state=defaultState, action) => {
 
     switch(action.type){
         case types.UPDATE_HAND:
-            if(action.data.player !== 'dealer'){
+            if(action.data.player === 'dealer'){
                 return {
                     ...state,
-                    playerHand: [...state.hand, ...action.data.cards]
+                    dealerHand: [...state.hand, ...action.data.cards]
                 }
             }
             
             return {
                 ...state
             }
+            
         case types.RECEIVED_HAND:
             return {
                 ...state,
@@ -27,11 +28,11 @@ const playerHand = (state=defaultState, action) => {
         case types.RECEIVED_HAND_ERROR:
             return {
                 ...state,
-                playerHand: action.data
+                dealerHand: action.data
             }
         default:
             return state
     }
 }
 
-export default playerHand
+export default dealerHand
