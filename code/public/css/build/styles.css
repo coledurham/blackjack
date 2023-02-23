@@ -87,8 +87,9 @@ footer {
   list-style: none;
   border:1px solid black;
   border-radius:5px;
-  min-width:1000px;
-  max-width:1400px;
+  width:1000px;
+  overflow:auto hidden;
+  white-space: nowrap;
 }
 
 .board .hand .card {

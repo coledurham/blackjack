@@ -6,6 +6,7 @@ import { createShoe } from './shoe'
 const createGame = (dispatch, shoe) => {
     // Increment our game field
     dispatch({type: types.REQUEST_NEW_GAME, data: {}})
+    dispatch({type: types.UPDATE_PLAYER, data: { player: 'player'}})
     dispatch(createShoe(shoe))
     dispatch(dealCard(2))
     dispatch(dealCard(2, 'player'))

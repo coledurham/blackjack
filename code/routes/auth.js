@@ -2,7 +2,6 @@
 
 const path = require('path')
 const nconf = require('nconf')
-const bcrypt = require('bcrypt')
 
 nconf.env()
 

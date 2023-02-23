@@ -6,10 +6,12 @@ import game from '../reducers/game'
 import playerHand from '../reducers/playerHand'
 import dealerHand from '../reducers/dealerHand'
 import shoe from '../reducers/shoe'
+import player from '../reducers/player'
 
 export default combineReducers({
     game,
     playerHand,
     dealerHand,
-    shoe
+    shoe,
+    player
 })

@@ -13,10 +13,9 @@ const playerHand = (state=defaultState, action) => {
             if(action.data.player !== 'dealer'){
                 return {
                     ...state,
-                    playerHand: [...state.hand, ...action.data.cards]
+                    hand: [...state.hand, ...action.data.cards]
                 }
             }
-            
             return {
                 ...state
             }

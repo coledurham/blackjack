@@ -1,13 +1,11 @@
 'use strict'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { Provider, useSelector } from 'react-redux'
+import { Provider } from 'react-redux'
 import { BrowserRouter } from "react-router-dom"  
 import { AuthProvider, useAuth } from './context/AuthContext'
-
-import axios from 'axios'
 
 import Navigation from './containers/Navigation/navigation'
 import Routing from './containers/Navigation/routing'
