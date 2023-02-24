@@ -2,31 +2,29 @@
 
 import { ActionTypes as types} from '../constants'
 
-const defaultState = {
-    shoe: []
-}
+const defaultState = []
 
 const shoe = (state=defaultState, action) => {
 
     switch(action.type){
         case types.REQUEST_NEW_SHOE:
-            return {
+            return [
                 ...state,
-                shoe: action.data.shoe
-            }
+                ...action.data.shoe
+            ]
         case types.REQUEST_NEW_SHOE_RECEIVED:
-            return {
+            return [
                 ...state,
-            }
+            ]
         case types.REQUEST_SHOE_DECREMENT:
-            return {
-                shoe: [...state.shoe.slice(action.data.numCards)]
-            }
+            return [
+                ...state.slice(action.data.numCards)
+            ]
         case types.REQUEST_NEW_SHOE_ERROR:
-            return {
+            return [
                 ...state,
-                shoe: action.data
-            }
+                ...action.data
+            ]
         default:
             return state
     }

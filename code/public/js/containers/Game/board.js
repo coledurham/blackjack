@@ -15,8 +15,8 @@ const CenterBoard = () => {
 
 const Board = () => {
 
-  const playerHand = useSelector((store) => store.playerHand.hand)
-  const dealerHand = useSelector((store) => store.dealerHand.hand)
+  const playerHand = useSelector((store) => store.playerHand)
+  const dealerHand = useSelector((store) => store.dealerHand)
 
   return <div id="content" className="board">
     <div className='dealerHand'>

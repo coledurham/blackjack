@@ -2,34 +2,32 @@
 
 import { ActionTypes as types} from '../constants'
 
-const defaultState = {
-    hand: []
-}
+const defaultState = []
 
 const dealerHand = (state=defaultState, action) => {
 
     switch(action.type){
         case types.UPDATE_HAND:
             if(action.data.player === 'dealer'){
-                return {
+                return [
                     ...state,
-                    hand: [...state.hand, ...action.data.cards]
-                }
+                    ...action.data.cards
+                ]
             }
             
-            return {
+            return [
                 ...state
-            }
-            
+            ]
+        case types.CLEAR_HAND:
+            return []
         case types.RECEIVED_HAND:
-            return {
+            return [
                 ...state,
-            }
+            ]
         case types.RECEIVED_HAND_ERROR:
-            return {
-                ...state,
-                dealerHand: action.data
-            }
+            return [
+                action.data
+            ]
         default:
             return state
     }

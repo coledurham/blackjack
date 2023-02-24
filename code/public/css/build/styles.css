@@ -56,8 +56,14 @@ footer {
     box-shadow:0 0 20px 0 hsl(var(--primary-dark-hsl), .7);
 }
 
-#banner p {
+#banner a {
   justify-content: center;
+  display:flex;
+  flex-grow:1;
+}
+
+#banner a:last-child {
+  flex-grow:0;
 }
 
 /*
@@ -83,6 +89,7 @@ footer {
   margin:0;
   padding:10px;
   height:100px;
+  background-color: hsl(var(--secondary-gray-hsl), 1);
   box-shadow:0 0 20px 0 hsl(var(--primary-dark-hsl), .7);
   list-style: none;
   border:1px solid black;
