@@ -37,6 +37,11 @@ const Controls = () => {
     dispatch(gameActions.quitGame())
   })
 
+  const stayHandler = useCallback((e) => {
+    e.preventDefault()
+    dispatch(gameActions.stay())
+  })
+
   return <ul className="controls">
     <li>
     <button onClick={newHandler} disabled={game > 0 ? 'disabled' : null}>New Game</button>
@@ -48,7 +53,7 @@ const Controls = () => {
       <button onClick={hitHandler} disabled={(game > 0 && player === 'player') ? null : 'disabled'}>Hit</button>
     </li>
     <li>
-      <button onClick={(e) => e.preventDefault} disabled={(game > 0 && player === 'player') ? null : 'disabled'}>Stay</button>
+      <button onClick={stayHandler} disabled={(game > 0 && player === 'player') ? null : 'disabled'}>Stay</button>
     </li>
     <li>
       <button onClick={foldHandler} disabled={(game > 0 && player === 'player') ? null : 'disabled'}>Fold</button>

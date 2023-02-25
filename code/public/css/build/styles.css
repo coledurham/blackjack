@@ -111,6 +111,11 @@ footer {
   text-align:center;
 }
 
+.board .hud {
+  display: flex;
+  flex-grow: 1;
+}
+
 /*
 * Player Controls styling
 */

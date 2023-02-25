@@ -45,6 +45,12 @@ export const fold = () => {
     }
 }
 
+export const stay = () => {
+    return (dispatch) => {
+        dispatch({type: types.PLAYER_STAY})
+    }
+}
+
 export const quitGame = () => {
     return {
         type: types.REQUEST_QUIT_GAME,

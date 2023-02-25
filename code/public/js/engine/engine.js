@@ -2,7 +2,6 @@
 
 const suits = ['diamonds', 'clubs', 'hearts', 'spades']
 const faces = ['K', 'Q', 'J', 'A']
-const deck =  []
 
 const generateCard = (suit, face, value) => {
         return {
@@ -12,6 +11,8 @@ const generateCard = (suit, face, value) => {
         }
     }
 const generateDeck = () => {
+    const deck =  []
+
     for(let suit of suits){
         for(let face of faces){
             deck.push(generateCard(suit, face, 10))
@@ -36,6 +37,7 @@ const shuffle = (cards) => {
 
 export const generateShoe = () => {
     const shoe = [...generateDeck(), ...generateDeck()]
+    
     shuffle(shoe)
 
     return shoe

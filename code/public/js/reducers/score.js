@@ -8,7 +8,7 @@ const score = (state=defaultState, action) => {
 
     switch(action.type){
         case types.UPDATE_SCORE:
-            return state + 1
+            return state + action.data.score
         case types.UPDATE_SCORE_ERROR:
             return action.data
         default:
