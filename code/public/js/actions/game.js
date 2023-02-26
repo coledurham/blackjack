@@ -1,29 +1,36 @@
 'use strict'
 
-import { ActionTypes as types} from '../constants'
+import { ActionTypes as types, Players} from '../constants'
 import { createShoe } from './shoe'
 import { dealCard } from './hand'
 
+const { PLAYER} = Players
+
 const createGame = (dispatch, shoe) => {
-    dispatch({type: types.REQUEST_NEW_GAME, data: {}})
-    dispatch({type: types.UPDATE_PLAYER, data: { player: 'player'}})
+    dispatch({type: types.REQUEST_NEW_GAME})
+    dispatch({type: types.UPDATE_PLAYER, data: { player: PLAYER}})
     dispatch(createShoe(shoe))
-    dispatch(dealCard(2))
-    dispatch(dealCard(2, 'player'))
-    dispatch({type: types.CHECK_WINNER, data: {}})
+    dispatch(dealCard())
+    dispatch(dealCard(1, PLAYER))
+    dispatch(dealCard())
+    dispatch(dealCard(1, PLAYER))
+    dispatch({type: types.CHECK_BLACKJACK})
 }
 
 const createRound = (dispatch => {
-    dispatch({type: types.REQUEST_NEW_ROUND, data: {}})
-    dispatch({type: types.UPDATE_PLAYER, data: { player: 'player'}})
+    dispatch({type: types.REQUEST_NEW_ROUND})
+    dispatch({type: types.UPDATE_PLAYER, data: { player: PLAYER}})
     dispatch({type: types.CLEAR_HAND})
-    dispatch(dealCard(2))
-    dispatch(dealCard(2, 'player'))
-    dispatch({type: types.CHECK_WINNER, data: {}})
+    dispatch({type: types.RESET_WINNER})
+    dispatch(dealCard())
+    dispatch(dealCard(1, PLAYER))
+    dispatch(dealCard())
+    dispatch(dealCard(1, PLAYER))
+    dispatch({type: types.CHECK_BLACKJACK})
 })
 
 const foldHand = (dispatch => {
-    dispatch({type: types.FOLD_HAND, data: {}})
+    dispatch({type: types.FOLD_HAND})
     createRound(dispatch)
 })
 
@@ -52,8 +59,5 @@ export const stay = () => {
 }
 
 export const quitGame = () => {
-    return {
-        type: types.REQUEST_QUIT_GAME,
-        data: {}
-    }
+    return { type: types.REQUEST_QUIT_GAME }
 }

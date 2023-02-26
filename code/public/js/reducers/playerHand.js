@@ -1,6 +1,6 @@
 'use strict'
 
-import { ActionTypes as types} from '../constants'
+import { ActionTypes as types, Players} from '../constants'
 
 const defaultState = []
 
@@ -8,7 +8,7 @@ const playerHand = (state=defaultState, action) => {
 
     switch(action.type){
         case types.UPDATE_HAND:
-            if(action.data.player !== 'dealer'){
+            if(action.data.player !== Players.DEALER){
                 return [
                     ...state,
                     ...action.data.cards

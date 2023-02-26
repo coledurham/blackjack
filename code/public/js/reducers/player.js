@@ -1,8 +1,8 @@
 'use strict'
 
-import { ActionTypes as types} from '../constants'
+import { ActionTypes as types, Players} from '../constants'
 
-const defaultState = 'player'
+const defaultState = Players.PLAYER
 
 const player = (state=defaultState, action) => {
 

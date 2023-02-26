@@ -10,12 +10,6 @@ const Navigation = ({redacted}) => {
 
     return (<nav id="banner">
       <Link to="/">Blackjack Casino</Link>
-      { user ? <a style={{ marginLeft: 'auto'}} href="/logout" onClick={(e) => {
-        e.preventDefault()
-        axios.delete('/logout')
-        .then(() => window.location.href='/' )
-        .catch((err) => console.error(err))
-      }}>Logout</a> : null }
     </nav>)
 }
 
