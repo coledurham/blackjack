@@ -4,18 +4,18 @@ import { ActionTypes as types} from '../constants'
 
 const defaultState = 0
 
-const score = (state=defaultState, action) => {
+const bet = (state=defaultState, action) => {
 
     switch(action.type){
-        case types.UPDATE_SCORE:
-            return state + action.data.score
-        case types.RESET_SCORE:
+        case types.UPDATE_BET:
+            return action.data.bet
+        case types.RESET_BET:
             return 0
-        case types.UPDATE_SCORE_ERROR:
+        case types.UPDATE_BET_ERROR:
             return action.data
         default:
             return state
     }
 }
 
-export default score
+export default bet

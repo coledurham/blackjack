@@ -11,6 +11,8 @@ const game = (state=defaultState, action) => {
             return state + 1
         case types.REQUEST_NEW_GAME_RECEIVED:
             return state
+        case types.REQUEST_CLEAR_GAME:
+            return 0
         case types.REQUEST_NEW_GAME_ERROR:
             return action.data
         default:

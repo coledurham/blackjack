@@ -121,7 +121,8 @@ footer {
   flex-grow:1;
 }
 
-.board .hud .score {
+.board .hud .score,
+.board .hud .bank {
   display:flex;
   margin-left:auto;
   align-items: center;

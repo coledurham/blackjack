@@ -9,7 +9,8 @@ import shoe from '../reducers/shoe'
 import player from '../reducers/player'
 import score from '../reducers/score'
 import winner from '../reducers/winner'
-//import gameState from '../reducers/winner'
+import bank from '../reducers/bank'
+import bet from './bet'
 
 export default combineReducers({
     game,
@@ -18,5 +19,7 @@ export default combineReducers({
     shoe,
     player,
     score,
-    winner
+    winner,
+    bank,
+    bet
 })

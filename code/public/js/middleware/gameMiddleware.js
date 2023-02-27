@@ -8,8 +8,7 @@ const { BUST, DRAW} = LossStates
 
 const dispatchWinner = (player, dispatch) => {
     dispatch({type: types.UPDATE_WINNER, data: { winner: player }})
-    dispatch({type: types.REQUEST_NEW_GAME, data: { winner: player }})
-    //dispatch(gameActions.newRound())
+    //dispatch({type: types.REQUEST_NEW_GAME, data: { winner: player }})
 }
 
 const dealCardsAction = (store, next, action) => {
@@ -23,7 +22,6 @@ const dealCardsAction = (store, next, action) => {
         next(action)
     }
     else {
-        console.error(`::: DISPATCHING REQUEST SHOE DECREMENT ERROR :::`)
         dispatch({type: types.REQUEST_SHOE_DECREMENT_ERROR})
     }
 }
@@ -33,45 +31,34 @@ const checkBlackJackBust = (store, next, action) => {
     const dispatch = store.dispatch
     
     if(checkBlackJack(state.dealerHand)){
-        dispatch({type: types.UPDATE_WINNER, data: { winner: DEALER}})
         dispatch({type: types.UPDATE_SCORE, data: { score: 0}})
-        console.log(`--- dealer is WINNER --- ${calcValue(state.dealerHand)}`)
         dispatchWinner(DEALER, dispatch)
+        dispatch({type: types.UPDATE_BANK, data: { bet: -state.bet}})
     }
 
     if(checkBlackJack(state.playerHand))
     {
-        dispatch({type: types.UPDATE_WINNER, data: { winner: PLAYER}})
         dispatch({type: types.UPDATE_SCORE, data: { score: 1}})
-
-        console.log(`--- player is WINNER --- ${calcValue(state.playerHand)}`)
         dispatchWinner(PLAYER, dispatch)
+        dispatch({type: types.UPDATE_BANK, data: { bet: state.bet}})
     }
 
     const playerBust = checkBust(state.playerHand)
     const dealerBust = checkBust(state.dealerHand)
 
     if(playerBust && !dealerBust){
-        dispatch({type: types.UPDATE_WINNER, data: { winner: DEALER}})
         dispatch({type: types.UPDATE_SCORE, data: { score: 0 }})
-
-        console.log(`--- dealer is WINNER (player bust) ${calcValue(state.playerHand)} --- ${calcValue(state.dealerHand)}`)
         dispatchWinner(DEALER, dispatch)
+        dispatch({type: types.UPDATE_BANK, data: { bet: -state.bet}})
     }
 
     if(dealerBust && !playerBust){
-        dispatch({type: types.UPDATE_WINNER, data: { winner: PLAYER}})
         dispatch({type: types.UPDATE_SCORE, data: { score: 1}})
-
-        console.log(`--- player is WINNER (dealer bust) --- ${calcValue(state.playerHand)}`)
-        
-        dispatchWinner(DEALER, dispatch)
+        dispatchWinner(PLAYER, dispatch)
+        dispatch({type: types.UPDATE_BANK, data: { bet: state.bet}})
     }
 
     dispatch({type: types.UPDATE_PLAYER, data: { player: PLAYER}})
-
-    console.log(`end of checkWinner values :: dealer ${calcValue(state.dealerHand)} :: player ${calcValue(state.playerHand)}`)
-
     next(action)
 
 }
@@ -85,27 +72,23 @@ const checkWinner = (store, next, action) => {
     const playerBust = checkBust(state.playerHand)
 
     if(!dealerBust && !playerBust && playerHandVal === dealerHandVal){
-        // draw
-        console.log('--- draw ---')
         dispatchWinner(DRAW, dispatch)
     }
 
     if(playerBust && dealerBust){
-        //bust
-        console.log('--- player bust ---')
         dispatchWinner(BUST, dispatch)
+        dispatch({type: types.UPDATE_BANK, data: { bet: -state.bet}})
     }
 
     if(!dealerBust && dealerHandVal > playerHandVal){
-        //dealer win
-        console.log('--- dealer winner ---')
         dispatchWinner(DEALER, dispatch)
+        dispatch({type: types.UPDATE_BANK, data: { bet: -state.bet}})
     }
 
     if(!playerBust && playerHandVal > dealerHandVal){
-        //player win
-        console.log('--- player winner ---')
         dispatchWinner(PLAYER, dispatch)
+        dispatch({type: types.UPDATE_SCORE, data: { score: 1}})
+        dispatch({type: types.UPDATE_BANK, data: { bet: state.bet}})
     }
 
     next(action)
@@ -120,7 +103,6 @@ const dealerPlay = (store, next, action) => {
         dispatch({ type: types.DEALER_PLAY})
     }
     else{
-        //checkWinner(store, next, action)
         dispatch({ type: types.CHECK_WINNER })
     }
 
@@ -139,13 +121,9 @@ export const gameMiddleware = store => next => action => {
     else if(action.type === types.CHECK_BLACKJACK || (action.type === types.UPDATE_HAND_FINISHED && state.dealerHand.length >= 2 && state.player === PLAYER)){
         checkBlackJackBust(store, next, action)
     }
-    else if(action.type === types.REQUEST_QUIT_GAME){
-        //TODO: quit game and reset store
-    }
     else if(action.type === types.PLAYER_STAY || action.type === types.DEALER_PLAY){
         dealerPlay(store, next, action)
     }
-    else{
-        next(action)
-    }
+    
+    next(action)
 }

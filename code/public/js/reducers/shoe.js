@@ -20,6 +20,8 @@ const shoe = (state=defaultState, action) => {
             return [
                 ...state.slice(action.data.numCards)
             ]
+        case types.REQUEST_EMPTY_SHOE:
+            return  []
         case types.REQUEST_NEW_SHOE_ERROR:
             return [
                 ...state,

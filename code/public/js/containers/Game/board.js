@@ -13,10 +13,11 @@ const CenterBoard = ({winner}) => {
     </div>)
 }
 
-const PlayerHUD = ({score}) => {
+const PlayerHUD = ({score, bank}) => {
   return (<div className="hud">
     <h1>Player Hand</h1>
     <p className="score">Score: {score}</p>
+    <p className="bank">Bank : {bank}</p>
   </div>)
 }
 
@@ -26,6 +27,7 @@ const Board = () => {
   const dealerHand = useSelector((store) => store.dealerHand)
   const score = useSelector((store) => store.score)
   const winner  = useSelector((store) => store.winner)
+  const bank = useSelector((store) => store.bank)
 
   return <div id="content" className="board">
     <div className='dealerHand'>
@@ -34,7 +36,7 @@ const Board = () => {
     </div>
     <CenterBoard winner={winner}/>
     <div className='playerHand'>
-      <PlayerHUD score={score} />
+      <PlayerHUD score={score} bank={bank}/>
       <Hand cards={playerHand}/>
     </div>
     <Controls />
