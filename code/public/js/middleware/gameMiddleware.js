@@ -8,7 +8,6 @@ const { BUST, DRAW} = LossStates
 
 const dispatchWinner = (player, dispatch) => {
     dispatch({type: types.UPDATE_WINNER, data: { winner: player }})
-    //dispatch({type: types.REQUEST_NEW_GAME, data: { winner: player }})
 }
 
 const dealCardsAction = (store, next, action) => {
@@ -31,15 +30,15 @@ const checkBlackJackBust = (store, next, action) => {
     const dispatch = store.dispatch
     
     if(checkBlackJack(state.dealerHand)){
-        dispatch({type: types.UPDATE_SCORE, data: { score: 0}})
         dispatchWinner(DEALER, dispatch)
+        dispatch({type: types.UPDATE_SCORE, data: { score: 0}})
         dispatch({type: types.UPDATE_BANK, data: { bet: -state.bet}})
     }
 
     if(checkBlackJack(state.playerHand))
     {
-        dispatch({type: types.UPDATE_SCORE, data: { score: 1}})
         dispatchWinner(PLAYER, dispatch)
+        dispatch({type: types.UPDATE_SCORE, data: { score: 1}})
         dispatch({type: types.UPDATE_BANK, data: { bet: state.bet}})
     }
 
@@ -47,14 +46,14 @@ const checkBlackJackBust = (store, next, action) => {
     const dealerBust = checkBust(state.dealerHand)
 
     if(playerBust && !dealerBust){
-        dispatch({type: types.UPDATE_SCORE, data: { score: 0 }})
         dispatchWinner(DEALER, dispatch)
+        dispatch({type: types.UPDATE_SCORE, data: { score: 0 }})
         dispatch({type: types.UPDATE_BANK, data: { bet: -state.bet}})
     }
 
     if(dealerBust && !playerBust){
-        dispatch({type: types.UPDATE_SCORE, data: { score: 1}})
         dispatchWinner(PLAYER, dispatch)
+        dispatch({type: types.UPDATE_SCORE, data: { score: 1}})
         dispatch({type: types.UPDATE_BANK, data: { bet: state.bet}})
     }
 
@@ -118,10 +117,10 @@ export const gameMiddleware = store => next => action => {
     else if(action.type === types.CHECK_WINNER){
         checkWinner(store, next, action)
     }
-    else if(action.type === types.CHECK_BLACKJACK || (action.type === types.UPDATE_HAND_FINISHED && state.dealerHand.length >= 2 && state.player === PLAYER)){
+    else if(action.type === types.CHECK_BLACKJACK || (action.type === types.UPDATE_HAND_FINISHED && state.dealerHand.length >= 2 && state.player === PLAYER) && !state.winner){
         checkBlackJackBust(store, next, action)
     }
-    else if(action.type === types.PLAYER_STAY || action.type === types.DEALER_PLAY){
+    else if(action.type === types.PLAYER_STAY || action.type === types.DEALER_PLAY && !state.winner){
         dealerPlay(store, next, action)
     }
     

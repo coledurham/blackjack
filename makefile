@@ -1,7 +1,5 @@
 SHELL := bash
 
-# note: the double dollar-sign is required because Make substitues $variables
-
 .PHONY: help
 
 build-base: Dockerfile.build
