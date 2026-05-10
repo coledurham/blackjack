@@ -1,20 +1,21 @@
 'use strict'
 
-const express = require('express')
-const nconf = require('nconf')
-const path = require('path')
-const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
-const methodOverride = require('method-override')
-const appRoutes = require('./routes/index')
-const authRoutes = require('./routes/auth')
-const session = require('express-session')
+import express, { Application } from 'express'
+import nconf from 'nconf'
+import path from 'node:path'
+import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
+import methodOverride from 'method-override'
+import session from 'express-session'
+
+import appRoutes from './routes/index.js'
+import authRoutes from './routes/auth.js'
 
 nconf.env()
 
-const users = []
+const users:Array<Object> = []
 
-const app = express()
+const app: Application = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -28,7 +29,7 @@ app.use(session({
     cookie: { secure: false, httpOnly: true, sameSite: true },
 }))
 
-const cwd = process.cwd()
+const cwd: string = process.cwd()
 
 app.use("/css", express.static(path.join(cwd, "public/css/build")))
 app.use("/scripts", express.static(path.join(cwd, "public/js/build")))
@@ -38,4 +39,4 @@ appRoutes(app, users)
 
 app.listen(3000)
 
-module.exports = app
+export { app }

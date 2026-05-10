@@ -2,6 +2,9 @@ SHELL := bash
 
 .PHONY: help
 
+build-ts: Dockerfile.build
+	@docker build -t blackjack:ts -f Dockerfile.build .
+
 build-base: Dockerfile.build
 	@docker build -t blackjack:base -f Dockerfile.build .
 

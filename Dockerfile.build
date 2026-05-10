@@ -7,6 +7,10 @@ LABEL project=blackjack
 LABEL tag=base
 WORKDIR /app/code
 COPY code/package.json .
-COPY code/webpack.config.js .
+#COPY code/webpack.config.js .
+COPY code/tsconfig.json .
+COPY code/app.ts .
+COPY code/routes routes/
 RUN npm install
+#RUN npm tsc --project tsconfig.json
 CMD ["bash"]

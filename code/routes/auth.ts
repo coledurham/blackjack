@@ -1,28 +1,27 @@
 'use strict'
 
-const path = require('path')
-const nconf = require('nconf')
+import path from 'node:path'
 
-nconf.env()
+import { Request, Response, Application } from "express"
 
-module.exports = (app, users) => {
+export default (app: Express, users: Array<Object>) => {
 
-  app.get('/login', (req, res) => {
+  app.get('/login', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../login.html'))
   })
   
-  app.get('/register', (req, res) => {
+  app.get('/register', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../register.html'))
   })
   
-  app.get('/logout', (req, res) => {
+  app.get('/logout', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../logout.html'))
   })
   
-  app.post('/login', (req, res) => {
+  app.post('/login', (req: Request, res: Response) => {
     const { email, password} = req.body
 
-    if(email && session){
+    if(email && req.session){
       // TODO: Loop through users away and find by email and check password
       req.session.user = {
         id: 1,
@@ -35,18 +34,16 @@ module.exports = (app, users) => {
     res.redirect('/login')
   })
   
-  app.get('/verifyCredentials', (req, res) => {
+  app.get('/verifyCredentials', (req: Request, res: Response) => {
     // TODO: verify password matches user by email in users array
     res.json(null)
   })
   
-  app.post('/register', async (req, res) => {
+  app.post('/register', async (req: Request, res: Response) => {
     try{
         const {firstName, lastName, email, password} = req.body
   
-        
-  
-        if(resp && resp.data && resp.data.success){
+        if(req && req.data && req.data.success){
           res.redirect('/login')
         }
         else{
@@ -59,7 +56,7 @@ module.exports = (app, users) => {
     }
   })
   
-  app.delete('/logout', (req, res) => {    
+  app.delete('/logout', (req: Request, res: Response) => {    
     res.clearCookie('sessionid')
     res.redirect('/')
   })

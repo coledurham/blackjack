@@ -6,6 +6,7 @@ LABEL Drew Durham (drew.cole.durham@gmail.com)
 LABEL project=blackjack
 LABEL tag=local
 WORKDIR /app/code
+COPY code/webpack.config.js .
 COPY code/app.js .
 COPY code/index.html .
 COPY code/register.html .
