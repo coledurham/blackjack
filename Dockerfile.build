@@ -1,16 +1,14 @@
-##build base blackjack image with necessary
-##node packages found in package.json
-
 FROM node:latest
 LABEL Drew Durham (coledurham@gmail.com)
 LABEL project=blackjack
 LABEL tag=base
 WORKDIR /app/code
-COPY code/package.json .
-#COPY code/webpack.config.js .
+COPY code/package-base.json package.json
 COPY code/tsconfig.json .
+COPY code/types types/
 COPY code/app.ts .
 COPY code/routes routes/
 RUN npm install
-#RUN npm tsc --project tsconfig.json
+RUN npx tsc
+EXPOSE 3000
 CMD ["bash"]

@@ -1,17 +1,16 @@
 ##Take base image and copy code into image
 ##to run.
 
-FROM blackjack:base
+FROM blackjack:base AS base
 LABEL Drew Durham (drew.cole.durham@gmail.com)
 LABEL project=blackjack
 LABEL tag=local
 WORKDIR /app/code
-COPY code/webpack.config.js .
-COPY code/app.js .
+COPY --from app.js .
 COPY code/index.html .
 COPY code/register.html .
 COPY code/login.html .
 COPY code/logout.html .
-COPY code/routes ./routes
+COPY --from routes/ routes/
 EXPOSE 3000
 CMD ["bash"]

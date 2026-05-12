@@ -22,12 +22,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(methodOverride('_method'))
 
-app.use(session({
-    secret: nconf.get('SESSION_SECRET'),
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false, httpOnly: true, sameSite: true },
-}))
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: { secure: false, httpOnly: true, sameSite: true },
+// }))
 
 const cwd: string = process.cwd()
 

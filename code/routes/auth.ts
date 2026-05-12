@@ -1,10 +1,13 @@
 'use strict'
 
+import { fileURLToPath } from 'url'
 import path from 'node:path'
 
 import { Request, Response, Application } from "express"
 
-export default (app: Express, users: Array<Object>) => {
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+export default (app: Application, users: Array<Object>) => {
 
   app.get('/login', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../login.html'))
@@ -18,7 +21,7 @@ export default (app: Express, users: Array<Object>) => {
     res.sendFile(path.join(__dirname, '../logout.html'))
   })
   
-  app.post('/login', (req: Request, res: Response) => {
+  /*app.post('/login', (req: SessionRequest, res: Response) => {
     const { email, password} = req.body
 
     if(email && req.session){
@@ -59,5 +62,5 @@ export default (app: Express, users: Array<Object>) => {
   app.delete('/logout', (req: Request, res: Response) => {    
     res.clearCookie('sessionid')
     res.redirect('/')
-  })
+  })*/
 }
