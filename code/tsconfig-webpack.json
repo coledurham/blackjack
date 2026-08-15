@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es2019",
+        "module": "esnext",
+        "jsx": "react-jsx",
+        "moduleResolution": "nodenext",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": false, // TODO: Change to false
+        "noCheck": false, // TODO: Change to false
+        "rootDir": "ts",
+        "outDir": "../js",
+        "sourceMap": true,
+        "declaration": false,
+        "allowImportingTsExtensions": true,
+        "rewriteRelativeImportExtensions": true
+    },
+    "include": ["ts/**/*", "ts/**/*.d.ts"],
+    "exclude": ["types/**/*"]
+}

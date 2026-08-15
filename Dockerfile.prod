@@ -1,0 +1,47 @@
+# Build base image to copy to candidate image
+
+FROM terraform.local/srv/blackjack:base AS base
+WORKDIR /app/code
+LABEL Drew Durham (drew.cole.durham@gmail.com)
+LABEL project=blackjack
+LABEL tag=base
+COPY code/routes ./src/routes
+COPY code/types ./src/types
+COPY code/app.ts ./src
+COPY code/public/css ./public/css
+COPY code/index.html .
+COPY code/login.html .
+COPY code/logout.html .
+COPY code/register.html .
+COPY code/tsconfig.json .
+COPY code/tsconfig-webpack.json frontend/tsconfig.json
+COPY code/webpack.config.js frontend/webpack.config.js
+COPY code/public/ts frontend/ts
+RUN chown -R node:node .
+USER node
+RUN npx tsc
+RUN npm run build
+EXPOSE 3000
+
+
+# Final prod image; copy everything over to 
+FROM node:latest AS candidate
+LABEL author="Drew Durham (drew.cole.durham@gmail.com)"
+LABEL project=blackjack
+LABEL tag=candidate
+WORKDIR /app/code
+COPY code/package.prod.json ./package.json
+COPY --from=base /app/code/node_modules ./node_modules
+COPY --from=base /app/code/app.js .
+COPY --from=base /app/code/routes/ ./routes/
+COPY --from=base /app/code/public/js/build/bundle.mjs ./public/js/build/
+COPY code/public/css/build/styles.css ./public/css/build/
+COPY code/index.html .
+COPY code/register.html .
+COPY code/login.html .
+COPY code/logout.html .
+RUN chown -R node:node .
+USER node
+ENTRYPOINT ["node"]
+CMD ["app.js"]
+EXPOSE 3000

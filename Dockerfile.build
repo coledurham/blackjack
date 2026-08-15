@@ -4,11 +4,6 @@ LABEL project=blackjack
 LABEL tag=base
 WORKDIR /app/code
 COPY code/package-base.json package.json
-COPY code/tsconfig.json .
-COPY code/types types/
-COPY code/app.ts .
-COPY code/routes routes/
-RUN npm install
-RUN npx tsc
+RUN npm install --ignore-scripts
 EXPOSE 3000
 CMD ["bash"]

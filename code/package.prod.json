@@ -1,0 +1,9 @@
+{
+  "name": "blackjack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "author": "Drew Durham",
+  "license": "ISC"
+}

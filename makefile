@@ -4,13 +4,18 @@ SHELL := bash
 
 build-base: Dockerfile.build
 	@docker build -t blackjack:base -f Dockerfile.build .
+	@docker tag blackjack:base terraform.local/srv/blackjack:base
 
 build-local: Dockerfile.build Dockerfile.local
-	@docker build -t blackjack:local -f Dockerfile.local .
+	@docker build -t terraform.local/srv/blackjack:local -f Dockerfile.local .
 
 build-local-full:
 	@docker context use default 
 	@make build-base build-local start-local run-webpack
+
+build-prod: Dockerfile.build Dockerfile.prod
+	@make build-base
+	@docker build -t terraform.local/srv/blackjack:candidate -f Dockerfile.prod .
 
 start-local:
 	@docker-compose -f docker-compose-local.yml up -d
@@ -34,6 +39,7 @@ help:
 	@echo "build-local          Build the local image for running blackjack app locally."
 	@echo "build-local-full     Build and run local in full; including base images."
 	@echo "start-local          Start the local instance and run it."
+	@echo "build-prod         	Build the production image for prod deploy."
 	@echo "remove-dangling      Remove dangling images."
 	@echo "down                 Docker down and remove blackjack volume."
 	@echo "down-local-full      Docker down and remove blackjack volume and all images including base."

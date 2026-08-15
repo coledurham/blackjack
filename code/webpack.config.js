@@ -1,29 +1,52 @@
-const path = require('path')
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-module.exports = () => {
-  return {
-    target: 'nodenext',
-    experiments: {
-      outputModule: true
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+export default {
+  mode: "development",
+  target: "node",
+  context: __dirname,
+  entry: "./ts/main.tsx",
+  output: {
+    filename: "bundle.mjs",
+    path: path.join(__dirname, '../public/js/build'),
+    library: { type: "module" }
+  },
+  experiments: {
+    outputModule: true
+  },
+  resolveLoader: {
+    modules: [
+      path.join(__dirname, 'node_modules'),
+      path.join(__dirname, '..', 'node_modules')
+    ],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.[tj]sx?$/,
+        exclude: /(node_modules)/,
+        loader: "esbuild-loader",
+        options: { 
+		loader: "tsx",
+		target: "es2022",
+		tsconfig: './tsconfig.json'
+		//tsconfigRaw: tsconfigString
+	}
+      }
+    ]
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".mjs"],
+    extensionAlias: {
+      '.js': ['.ts', '.tsx', '.js'],
     },
-    entry: './public/js/main.js',
-    output: {
-      filename: 'bundle.js',
-      module: true,
-      path: path.resolve(__dirname, 'public/js/build')
-    },
-    externalPresets: { type: 'module' },
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          exclude: /(node_modules)/,
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/react']
-          }
-        }
-      ]
-    }
-  }
-}
+    modules: [
+      path.join(__dirname, 'node_modules'),
+      path.join(__dirname, '..', 'node_modules')
+    ]
+  },
+  externalsType: "module",
+  externals: []
+};

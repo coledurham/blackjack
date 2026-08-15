@@ -1,16 +1,27 @@
-##Take base image and copy code into image
-##to run.
-
-FROM blackjack:base AS base
+#
+FROM terraform.local/srv/blackjack:base AS base
+WORKDIR /app/code
 LABEL Drew Durham (drew.cole.durham@gmail.com)
 LABEL project=blackjack
 LABEL tag=local
-WORKDIR /app/code
-COPY --from app.js .
+RUN apt update -y # Remove when finished
+RUN apt install vim -y # Remove when finished
+COPY code/routes ./src/routes
+COPY code/types ./src/types
+COPY code/app.ts ./src
+COPY code/public/css ./public/css
 COPY code/index.html .
-COPY code/register.html .
 COPY code/login.html .
 COPY code/logout.html .
-COPY --from routes/ routes/
+COPY code/register.html .
+COPY code/tsconfig.json .
+COPY code/tsconfig-webpack.json frontend/tsconfig.json
+COPY code/webpack.config.js frontend/webpack.config.js
+COPY code/public/ts frontend/ts
+RUN chown -R node:node .
+USER node
+RUN npx tsc
+RUN npm run build
+ENTRYPOINT ["node"]
+CMD ["app.js"]
 EXPOSE 3000
-CMD ["bash"]

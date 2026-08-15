@@ -1,0 +1,19 @@
+'use strict'
+
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import { gameMiddleware } from '../middleware/gameMiddleware.ts'
+
+import rootReducer from '../reducers/index.ts'
+
+const logger = createLogger({
+    collapsed: true
+})
+
+const store = createStore(
+    rootReducer,
+    applyMiddleware(thunk, logger, gameMiddleware)
+)
+
+export default store
