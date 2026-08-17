@@ -1,8 +1,7 @@
 version: "3.3"
 services:
     web:
-      image: blackjack:local
-      command: ['node', 'app.js']
+      image: terraform.local/srv/blackjack:local
       environment:
         SESSION_SECRET: ${SESSION_SECRET}
       ports:
@@ -10,7 +9,6 @@ services:
       networks:
         - blackjack-net 
       volumes:
-          - ./code/public:/app/code/public
           - blackjack:/blackjack/data
           
 networks:

@@ -2,7 +2,7 @@
 
 FROM terraform.local/srv/blackjack:base AS base
 WORKDIR /app/code
-LABEL Drew Durham (drew.cole.durham@gmail.com)
+LABEL author="Drew Durham"
 LABEL project=blackjack
 LABEL tag=base
 COPY code/routes ./src/routes
@@ -26,7 +26,7 @@ EXPOSE 3000
 
 # Final prod image; copy everything over to 
 FROM node:latest AS candidate
-LABEL author="Drew Durham (drew.cole.durham@gmail.com)"
+LABEL author="Drew Durham"
 LABEL project=blackjack
 LABEL tag=candidate
 WORKDIR /app/code

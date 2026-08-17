@@ -9,9 +9,9 @@ build-base: Dockerfile.build
 build-local: Dockerfile.build Dockerfile.local
 	@docker build -t terraform.local/srv/blackjack:local -f Dockerfile.local .
 
-build-local-full:
+build-local-full: Dockerfile.build Dockerfile.local
 	@docker context use default 
-	@make build-base build-local start-local run-webpack
+	@make build-base build-local start-local
 
 build-prod: Dockerfile.build Dockerfile.prod
 	@make build-base

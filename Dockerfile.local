@@ -4,8 +4,6 @@ WORKDIR /app/code
 LABEL Drew Durham (drew.cole.durham@gmail.com)
 LABEL project=blackjack
 LABEL tag=local
-RUN apt update -y # Remove when finished
-RUN apt install vim -y # Remove when finished
 COPY code/routes ./src/routes
 COPY code/types ./src/types
 COPY code/app.ts ./src
