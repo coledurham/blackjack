@@ -10,6 +10,7 @@ const Routing = () => {
     return (<Routes>
         <Route path="*" element={ <Oops/> } />
         <Route path="/" element={ <Board/> } />
+        <Route path="/game" element={ <Board/> } />
     </Routes>)
 }
 
