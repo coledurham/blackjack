@@ -9,6 +9,7 @@ const Navigation = ({redacted}) => {
 
     return (<nav id="banner">
       <Link to="/">Blackjack Casino</Link>
+      <a href="/logout" >Logout: {user?.name || ''}</a>
     </nav>)
 }
 

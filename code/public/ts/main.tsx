@@ -1,6 +1,6 @@
 'use strict'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import { Provider } from 'react-redux'
@@ -18,6 +18,23 @@ import Footer from './components/footer.js'
 
 const App = (): JSX.Element => {
   const { user, setUser } = useAuth()
+
+  useEffect(() => {
+    fetch("/verifyCredentials")
+      .then(response => {
+        if(!response.ok){
+          console.error("FAILED RESPONSE")
+        }
+
+        return response.json()
+      })
+      .then(data => {
+        setUser(data?.user || {})
+      })
+      .catch((err: Error) => {
+        console.error("Error verifying credentials :: ", err)
+      })
+  }, [])
 
   return (!user ?
           (<>

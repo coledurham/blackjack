@@ -5,7 +5,7 @@ import path from 'node:path'
 
 import { readFile, writeFile } from 'node:fs/promises'
 
-import { Request, Response, Application } from "express"
+import { Request, Response, NextFunction, Application } from "express"
 
 import { User, SessionUser } from '../types/session'
 
@@ -48,7 +48,7 @@ export default (app: Application, users: Array<Object>) => {
           id: user.email,
           kind: "auth",
           user: {
-            name: user.name,
+            name: `${user.firstName} ${user.lastName}`,
             email: user.email
           }
         }
@@ -64,14 +64,13 @@ export default (app: Application, users: Array<Object>) => {
   })
   
   app.get('/verifyCredentials', (req: Request, res: Response) => {
-    if(req.session?.auth?.user && req.session.auth.user?.name === req.body.user){
-      return res.json(JSON.stringify({
+    if(req.session?.auth?.user && req.session.auth.user?.email){
+      return res.json({
         user: {
-          firstName: req.session.auth.user.firstName,
-          lastName: req.session.auth.user.lastName,
+          name: req.session.auth.user.name,
           email: req.session.auth.user.email
         }
-      }))
+      })
     }
 
     return res.status(401).json(null)
@@ -96,7 +95,8 @@ export default (app: Application, users: Array<Object>) => {
 
         if(firstName && lastName && email && password) {
           parsed.push({
-            name: `${firstName} ${lastName}`,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
             password: password
           })
@@ -115,8 +115,19 @@ export default (app: Application, users: Array<Object>) => {
     }
   })
   
-  app.delete('/logout', (req: Request, res: Response) => {    
-    res.clearCookie('sessionid')
-    res.redirect('/')
+  app.delete('/logout', (req: Request, res: Response, next: NextFunction) => {    
+    req.session.destroy(err => {
+      if(err)
+        return next(err)
+
+      res.clearCookie('connect.sid', {
+        httpOnly: true,
+        secure: false,
+        path: '/',
+        sameSite: 'strict'
+      })
+
+      res.redirect('/')
+    })
   })
 }
