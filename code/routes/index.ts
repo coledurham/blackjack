@@ -13,6 +13,9 @@ export default (app: Application, users: Array<Object>) => {
   })
 
   app.get('/', (req: Request, res: Response) => {
+    if(!req.session?.auth?.user){
+      return res.redirect('/splash')
+    }
     res.sendFile(path.join(__dirname, '../index.html'))
   })
 

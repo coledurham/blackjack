@@ -2,8 +2,8 @@ version: "3.3"
 services:
     web:
       image: terraform.local/srv/blackjack:local
-      environment:
-        SESSION_SECRET: ${SESSION_SECRET}
+      env_file:
+        - .env
       ports:
         - "4001:3000"
       networks:

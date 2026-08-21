@@ -26,7 +26,7 @@ const App = (): JSX.Element => {
           </>) :
           (<>
             <BrowserRouter>
-              <Navigation/>
+              <Navigation />
               <Routing />
               <Footer />
             </BrowserRouter>
