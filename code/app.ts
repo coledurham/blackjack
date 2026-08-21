@@ -22,8 +22,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(methodOverride('_method'))
 
-console.log("session secret is :: ", process.env.SESSION_SECRET)
-
 app.use(session({
     secret: process?.env?.SESSION_SECRET || 'changemeyoulazypos',
     resave: false,

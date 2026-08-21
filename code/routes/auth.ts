@@ -90,12 +90,9 @@ export default (app: Application, users: Array<Object>) => {
         const parsed: Array<User> = JSON.parse(creds.toString())
         const user: User = parsed.filter((el: User) => el.email === email).slice(0,1)[0]
 
-        console.log('parsed and filtered users')
-
         if(user){
           res.redirect('/register')
         }
-        console.log("made it past user check :: ", firstName, lastName, email, password)
 
         if(firstName && lastName && email && password) {
           parsed.push({
@@ -103,8 +100,6 @@ export default (app: Application, users: Array<Object>) => {
             email: email,
             password: password
           })
-
-          console.log("parsed is :: ", parsed)
 
           await writeFile(__creds, JSON.stringify(parsed))
 
