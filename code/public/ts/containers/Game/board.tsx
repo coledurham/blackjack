@@ -8,13 +8,23 @@ import Hand from '../../components/Game/hand.tsx'
 import Controls from '../../components/Game/controls.tsx'
 import { useAuth } from '../../context/AuthContext.tsx'
 
-const CenterBoard = ({winner}) => {
+interface CenterBoardProps {
+  winner: string
+}
+
+interface PlayerHUDProps {
+  score: number,
+  bank: number,
+  player: string
+}
+
+const CenterBoard: React.FC<CenterBoardProps> = ({winner}) => {
   return (<div className="centerBoard">
       <h1>{ winner ? winner : 'BlackJack Casino'}</h1>
     </div>)
 }
 
-const PlayerHUD = ({score, bank, player}) => {
+const PlayerHUD: React.FC<PlayerHUDProps> = ({score, bank, player}) => {
   return (<div className="hud">
     <h1>Player Hand: {player || ''}</h1>
     <p className="score">Score: {score}</p>
@@ -22,8 +32,7 @@ const PlayerHUD = ({score, bank, player}) => {
   </div>)
 }
 
-const Board = () => {
-
+const Board: React.FC = () => {
   const playerHand = useSelector((store) => store.playerHand)
   const dealerHand = useSelector((store) => store.dealerHand)
   const score = useSelector((store) => store.score)

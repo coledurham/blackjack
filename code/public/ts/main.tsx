@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from "react-router-dom"  
 import { AuthProvider, useAuth } from './context/AuthContext.js'
+import { AuthSession } from '../../types/session.js'
 
 import Navigation from './containers/Navigation/navigation.js'
 import Routing from './containers/Navigation/routing.js'
@@ -16,24 +17,19 @@ import store from './store/configureStore.js'
 
 import Footer from './components/footer.js'
 
-const App = (): JSX.Element => {
+const App: React.FC = () => {
   const { user, setUser } = useAuth()
 
-  useEffect(() => {
-    fetch("/verifyCredentials")
-      .then(response => {
-        if(!response.ok){
-          console.error("FAILED RESPONSE")
-        }
+  useEffect(async () => {
+    const response: Response = await fetch("/verifyCredentials")
 
-        return response.json()
-      })
-      .then(data => {
-        setUser(data?.user || {})
-      })
-      .catch((err: Error) => {
-        console.error("Error verifying credentials :: ", err)
-      })
+    if(!response.ok)
+        return
+
+    const authSession: AuthSession = await response.json()
+
+    if(authSession?.user)
+      setUser(authSession.user)
   }, [])
 
   return (!user ?

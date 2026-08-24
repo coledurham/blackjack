@@ -6,21 +6,22 @@ import { Request, Response, Application } from 'express'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-export default (app: Application, users: Array<Object>) => {
+export default (app: Application) => {
 
-  app.get('/game', (req: Request, res: Response) => {
+  app.get('/game', (req: Request, res: Response): void => {
     res.sendFile(path.join(__dirname, '../index.html'))
   })
 
-  app.get('/', (req: Request, res: Response) => {
+  app.get('/', (req: Request, res: Response): void => {
     if(!req.session?.auth?.user){
-      return res.redirect('/splash')
+      res.redirect('/splash')
+      return
     }
     res.sendFile(path.join(__dirname, '../index.html'))
   })
 
-  app.get('*', (req: Request, res: Response) => {
-    console.log('in * catch all to return ' + path.join(__dirname, '../index.html'))
+  app.get('*', (req: Request, res: Response): void => {
+    console.log(`* catch all to return - ${req.url} - ${path.join(__dirname, '../index.html')}`)
     res.sendFile(path.join(__dirname, '../index.html'))
   })
 }

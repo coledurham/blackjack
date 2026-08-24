@@ -22,7 +22,7 @@ const Controls = () => {
   const playerHand = useSelector((store) => store.playerHand)
   
   
-  const [userBet, setUserBet] = useState(null)
+  const [userBet, setUserBet] = useState(0)
   const [allowBet, setAllowBet] = useState(true)
 
   const getBet = (bet) => {
@@ -99,7 +99,7 @@ const Controls = () => {
 
   return <ul className="controls">
     <li>
-      <input value={userBet} disabled={allowBet && bank > 0 ? null : 'disabled' } onChange={betHandler} autofocus="autofocus" />
+      <input value={userBet} disabled={allowBet && bank > 0 ? null : 'disabled' } onChange={betHandler} autoFocus="autofocus" />
       <button onClick={submitBet} disabled={allowBet && bank > 0 ? null : 'disabled'}>Bet</button>
     </li>
     <li>

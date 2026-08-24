@@ -4,7 +4,7 @@ import React from 'react'
 
 import BaseLayout from '../Layout/layout'
 
-const Splash = () => {
+const Splash: React.FC = () => {
   return (
     <BaseLayout>
       <div className="splash panel">

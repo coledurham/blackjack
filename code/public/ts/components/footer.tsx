@@ -3,9 +3,9 @@
 import React from 'react'
 
 const Footer = () => {
-    return <footer class="site-footer">
+    return (<footer className="site-footer">
         Copyright Blackjack Casino {new Date().getFullYear()}
-    </footer>
+    </footer>)
 }
 
 export default Footer

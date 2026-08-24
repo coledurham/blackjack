@@ -7,37 +7,37 @@ import { readFile, writeFile } from 'node:fs/promises'
 
 import { Request, Response, NextFunction, Application } from "express"
 
-import { User, SessionUser } from '../types/session'
+import { AuthSession, User } from '../types/session'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const __creds = await path.join(__dirname, `../creds.json`)
 
-export default (app: Application, users: Array<Object>) => {
+export default (app: Application) => {
 
-  app.get('/splash', (req: Request, res: Response) => {
+  app.get('/splash', (req: Request, res: Response): void => {
     res.sendFile(path.join(__dirname, '../splash.html'))
   })
 
-  app.get('/login', (req: Request, res: Response) => {
+  app.get('/login', (req: Request, res: Response): void => {
     res.sendFile(path.join(__dirname, '../login.html'))
   })
   
-  app.get('/register', (req: Request, res: Response) => {
+  app.get('/register', (req: Request, res: Response): void => {
     res.sendFile(path.join(__dirname, '../register.html'))
   })
   
-  app.get('/logout', (req: Request, res: Response) => {
+  app.get('/logout', (req: Request, res: Response): void => {
     res.sendFile(path.join(__dirname, '../logout.html'))
   })
   
-  app.post('/login', async (req: Request, res: Response) => {
-    const { email, password} = req.body
+  app.post('/login', async (req: Request, res: Response): Promise<void> => {
+    const { email, password }: {email: string, password: string } = req.body
 
     if(!email || !password || !req.session) {
       res.redirect('/login')
     }
 
-    const creds = await readFile(__creds, { encoding: "utf8"})
+    const creds: string = await readFile(__creds, { encoding: "utf8"})
 
     try{
       const parsed: Array<User> = JSON.parse(creds.toString())
@@ -53,30 +53,43 @@ export default (app: Application, users: Array<Object>) => {
           }
         }
 
-        return res.redirect('/')
+        res.redirect('/')
+        return
       }
 
-      return res.redirect('/login')
+      res.redirect('/login')
+      return
     }
     catch(err){
-      return res.redirect('/login')
+      res.redirect('/login')
+      return
     }
   })
   
-  app.get('/verifyCredentials', (req: Request, res: Response) => {
+  app.get('/verifyCredentials', (req: Request, res: Response<AuthSession | null>): void => {
+    
     if(req.session?.auth?.user && req.session.auth.user?.email){
-      return res.json({
+      const email: string = req.session.auth.user.email
+      const name: string = req.session.auth.user.name
+
+      const authSession: AuthSession = {
+        kind: "auth",
+        id: email,
+        email,
         user: {
-          name: req.session.auth.user.name,
-          email: req.session.auth.user.email
+          name,
+          email
         }
-      })
+      }
+
+      res.json(authSession)
+      return
     }
 
-    return res.status(401).json(null)
+    res.status(401).json(null)
   })
   
-  app.post('/register', async (req: Request, res: Response) => {
+  app.post('/register', async (req: Request, res: Response): Promise<void> => {
     try{
         const {firstName, lastName, email, password} = req.body
 
@@ -110,13 +123,13 @@ export default (app: Application, users: Array<Object>) => {
         }
     }
     catch(err) {
-        console.error(`:: Error in register :: ${JSON.stringify(err)})}`)
+        console.error(`Error in register :: ${JSON.stringify(err)})}`)
         res.redirect('/register')
     }
   })
   
-  app.delete('/logout', (req: Request, res: Response, next: NextFunction) => {    
-    req.session.destroy(err => {
+  app.delete('/logout', (req: Request, res: Response, next: NextFunction): void => {    
+    req.session.destroy((err: Error) => {
       if(err)
         return next(err)
 
