@@ -1,16 +1,22 @@
-import { ActionTypes as types, Players, LossStates } from '../constants.ts'
+import { ActionTypes as types, Players, LossStates } from '@/constants'
 
-import { calcValue, checkBlackJack, checkBust } from '../engine/engine.ts'
+import type { AppDispatch } from '@/store/configureStore'
+
+import type { RootState } from '@/reducers'
+
+import { MiddlewareAPI } from 'redux'
+
+import { calcValue, checkBlackJack, checkBust } from '@/engine/engine'
 
 const { DEALER, PLAYER } = Players
 
 const { BUST, DRAW} = LossStates
 
-const dispatchWinner = (player, dispatch) => {
+const dispatchWinner = (player: string, dispatch: AppDispatch) => {
     dispatch({type: types.UPDATE_WINNER, data: { winner: player }})
 }
 
-const dealCardsAction = (store, next, action) => {
+const dealCardsAction = (store: MiddlewareAPI<AppDispatch, RootState>, next: AppDispatch, action: any)  => {
     const state = store.getState()
     const dispatch = store.dispatch
     
@@ -25,7 +31,7 @@ const dealCardsAction = (store, next, action) => {
     }
 }
 
-const checkBlackJackBust = (store, next, action) => {
+const checkBlackJackBust = (store: MiddlewareAPI<AppDispatch, RootState>, next: AppDispatch, action: any) => {
     const state = store.getState()
     const dispatch = store.dispatch
     
@@ -62,7 +68,7 @@ const checkBlackJackBust = (store, next, action) => {
 
 }
 
-const checkWinner = (store, next, action) => {
+const checkWinner = (store: MiddlewareAPI<AppDispatch, RootState>, next: AppDispatch, action: any) => {
     const state = store.getState()
     const dispatch = store.dispatch
     const playerHandVal = calcValue(state.playerHand)
@@ -93,7 +99,7 @@ const checkWinner = (store, next, action) => {
     next(action)
 }
 
-const dealerPlay = (store, next, action) => {
+const dealerPlay = (store: MiddlewareAPI<AppDispatch, RootState>, next: AppDispatch, action: any) => {
     const state = store.getState()
     const dispatch = store.dispatch
 
@@ -108,7 +114,7 @@ const dealerPlay = (store, next, action) => {
     next(action)
 }
 
-export const gameMiddleware = store => next => action => {
+export const gameMiddleware = (store: MiddlewareAPI<AppDispatch, RootState>) => (next: AppDispatch) => (action: any) => {
     const state = store.getState()
 
     if(action.type === types.REQUEST_DEAL_CARDS){

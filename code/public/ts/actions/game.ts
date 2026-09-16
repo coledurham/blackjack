@@ -1,12 +1,15 @@
 'use strict'
 
+import type { AppDispatch } from '@/store/configureStore'
 import { ActionTypes as types, Players} from '../constants.ts'
 import { createShoe } from './shoe.ts'
 import { dealCard } from './hand.ts'
 
+import type { Shoe, Bet } from '@/types/game'
+
 const { PLAYER } = Players
 
-const resetGame = ((dispatch, shoe) => {
+const resetGame = ((dispatch: AppDispatch, shoe: Shoe) => {
     dispatch({type: types.REQUEST_QUIT_GAME})
     dispatch({type: types.UPDATE_PLAYER, data: { player: PLAYER}})
     dispatch({type: types.REQUEST_EMPTY_SHOE})
@@ -19,58 +22,58 @@ const resetGame = ((dispatch, shoe) => {
     dispatch(createShoe(shoe))
 })
 
-const createGame = (dispatch, shoe) => {
+const createGame = (dispatch: AppDispatch, shoe: Shoe) => {
     dispatch({type: types.REQUEST_NEW_GAME})
     dispatch({type: types.UPDATE_PLAYER, data: { player: PLAYER}})
     dispatch(createShoe(shoe))
 }
 
-const createRound = (dispatch => {
+const createRound = ((dispatch: AppDispatch) => {
     dispatch({type: types.REQUEST_NEW_ROUND})
     dispatch({type: types.UPDATE_PLAYER, data: { player: PLAYER}})
     dispatch({type: types.CLEAR_HAND})
     dispatch({type: types.RESET_WINNER})
 })
 
-const surrenderHand = ((dispatch, bet) => {
+const surrenderHand = ((dispatch: AppDispatch, bet: Bet) => {
     dispatch({type: types.SURRENDER_HAND})
     dispatch({type: types.UPDATE_BANK, data: { bet: -Math.ceil(bet/2)}})
     dispatch({type: types.UPDATE_BET, data: {bet: 0}})
     createRound(dispatch)
 })
 
-export const newGame = (shoe) => {
-    return (dispatch) => {
+export const newGame = (shoe: Shoe) => {
+    return (dispatch: AppDispatch) => {
         createGame(dispatch, shoe)
     }
 }
 
 export const newRound = () => {
-    return (dispatch) => {
+    return (dispatch: AppDispatch) => {
         createRound(dispatch)
     }
 }
 
-export const surrender = (bet) => {
-    return (dispatch) => {
+export const surrender = (bet: Bet) => {
+    return (dispatch: AppDispatch) => {
         surrenderHand(dispatch, bet)
     }
 }
 
 export const stay = () => {
-    return (dispatch) => {
+    return (dispatch: AppDispatch) => {
         dispatch({type: types.PLAYER_STAY})
     }
 }
 
-export const quitGame = (shoe) => {
-    return (dispatch) => {
+export const quitGame = (shoe: Shoe) => {
+    return (dispatch: AppDispatch) => {
         resetGame(dispatch, shoe)
     }
 }
 
 export const initialDeal = () => {
-    return (dispatch) => {
+    return (dispatch: AppDispatch) => {
         dispatch(dealCard())
         dispatch(dealCard(1, PLAYER))
         dispatch(dealCard())

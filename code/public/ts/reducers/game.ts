@@ -1,10 +1,11 @@
 'use strict'
 
-import { ActionTypes as types} from '../constants.ts'
+import { ActionTypes as types} from '@/constants'
+import type { GameAction } from '@/types/game'
 
-const defaultState = 0
+const defaultState: number = 0
 
-const game = (state=defaultState, action) => {
+const game = (state=defaultState, action: GameAction) => {
 
     switch(action.type){
         case types.REQUEST_NEW_GAME:

@@ -1,10 +1,10 @@
 'use strict'
 
-import { ActionTypes as types} from '../constants.ts'
+import { ActionTypes as types} from '@/constants'
 
-const defaultState = 'uniitialized'
+const defaultState: string = 'uninitialized'
 
-const gameState = (state=defaultState, action) => {
+const gameState = (state=defaultState, action: any) => {
 
     switch(action.type){
         case types.UPDATE_GAME_STATE:

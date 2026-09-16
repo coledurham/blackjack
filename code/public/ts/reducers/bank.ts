@@ -1,10 +1,11 @@
 'use strict'
 
-import { ActionTypes as types} from '../constants.ts'
+import { ActionTypes as types} from '@/constants'
+import type { BankAction } from '@/types/game'
 
-const defaultState = 1000
+const defaultState: number = 1000
 
-const bank = (state=defaultState, action) => {
+const bank = (state:number = defaultState, action: BankAction) => {
     switch(action.type){
         case types.UPDATE_BANK:
             return state + action.data.bet

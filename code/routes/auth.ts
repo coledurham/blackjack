@@ -7,27 +7,23 @@ import { readFile, writeFile } from 'node:fs/promises'
 
 import { Request, Response, NextFunction, Application } from "express"
 
-import { AuthSession, User } from '../types/session'
+import { AuthSession, User } from '../types/session.ts'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const __creds = await path.join(__dirname, `../creds.json`)
+const __creds = await path.join(__dirname, `../../creds.json`)
 
 export default (app: Application) => {
 
-  app.get('/splash', (req: Request, res: Response): void => {
-    res.sendFile(path.join(__dirname, '../splash.html'))
-  })
-
   app.get('/login', (req: Request, res: Response): void => {
-    res.sendFile(path.join(__dirname, '../login.html'))
+    res.sendFile(path.join(__dirname, '../../login.html'))
   })
   
   app.get('/register', (req: Request, res: Response): void => {
-    res.sendFile(path.join(__dirname, '../register.html'))
+    res.sendFile(path.join(__dirname, '../../register.html'))
   })
   
   app.get('/logout', (req: Request, res: Response): void => {
-    res.sendFile(path.join(__dirname, '../logout.html'))
+    res.sendFile(path.join(__dirname, '../../logout.html'))
   })
   
   app.post('/login', async (req: Request, res: Response): Promise<void> => {

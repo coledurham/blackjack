@@ -12,7 +12,7 @@ import winner from './winner.ts'
 import bank from './bank.ts'
 import bet from './bet.ts'
 
-export default combineReducers({
+export const rootReducer = combineReducers({
     game,
     playerHand,
     dealerHand,
@@ -23,3 +23,5 @@ export default combineReducers({
     bank,
     bet
 })
+
+export type RootState = ReturnType<typeof rootReducer>

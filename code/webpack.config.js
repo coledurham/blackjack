@@ -18,7 +18,6 @@ export default {
   },
   resolveLoader: {
     modules: [
-      path.join(__dirname, 'node_modules'),
       path.join(__dirname, '..', 'node_modules')
     ],
   },
@@ -32,7 +31,6 @@ export default {
 		loader: "tsx",
 		target: "es2022",
 		tsconfig: './tsconfig.json'
-		//tsconfigRaw: tsconfigString
 	}
       }
     ]
@@ -41,11 +39,15 @@ export default {
     extensions: [".ts", ".tsx", ".js", ".mjs"],
     extensionAlias: {
       '.js': ['.ts', '.tsx', '.js'],
+      '.mjs': ['.mts', '.mjs']
     },
     modules: [
-      path.join(__dirname, 'node_modules'),
-      path.join(__dirname, '..', 'node_modules')
-    ]
+      path.resolve(__dirname, '../node_modules'),
+      'node_modules'
+    ],
+    alias: {
+      '@': path.resolve(__dirname, './ts')
+    }
   },
   externalsType: "module",
   externals: []

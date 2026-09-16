@@ -5,8 +5,10 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "server": "node ./app.js",
-    "build": "webpack --config ./frontend/webpack.config.js",
+    "server": "node ./server/app.js",
+    "build": "tsc --noEmit -p ./frontend/ && webpack --config ./frontend/webpack.config.js",
+    "buildonly": "webpack --config ./frontend/webpack.config.js",
+    "check": "tsc --noEmit -p ./frontend/",
     "webpack": "webpack -w --config ./frontend/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -38,7 +40,8 @@
       "@types/method-override": "^3.0.0",
       "@types/react": "^19.2.3",
       "@types/redux-logger": "^3.0.13",
-      "@types/react-dom": "^19.2.3",
+      "@types/react": "^17.0.93",
+      "@types/react-dom": "^17.0.26",
       "@types/node": "25.6.2"
   }
 }

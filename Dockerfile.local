@@ -1,12 +1,13 @@
 #
 FROM terraform.local/srv/blackjack:base AS base
-WORKDIR /app/code
 LABEL Drew Durham (drew.cole.durham@gmail.com)
 LABEL project=blackjack
 LABEL tag=local
-COPY code/routes ./src/routes
-COPY code/types ./src/types
-COPY code/app.ts ./src
+WORKDIR /app/code
+COPY code/public/ts frontend/ts
+COPY code/routes src/routes
+COPY code/types src/types
+COPY code/app.ts src/
 COPY code/public/css ./public/css
 COPY code/index.html .
 COPY code/login.html .
@@ -16,12 +17,15 @@ COPY code/splash.html .
 COPY code/tsconfig.json .
 COPY code/tsconfig-webpack.json frontend/tsconfig.json
 COPY code/webpack.config.js frontend/webpack.config.js
-COPY code/public/ts frontend/ts
 COPY creds.json ./creds.json
+RUN apt update -y && apt upgrade -y && apt install vim less -y
 RUN chown -R node:node .
 USER node
+#Builds server/backend via tsc with type checking
 RUN npx tsc
+#Replace with build once all type errors are resolved
+#RUN npm run check
 RUN npm run build
 ENTRYPOINT ["node"]
-CMD ["app.js"]
+CMD ["server/app.js"]
 EXPOSE 3000

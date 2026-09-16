@@ -1,9 +1,11 @@
 'use strict'
 
 import React from 'react'
-import Card from './card.tsx'
+import Card from './card'
 
-const Hand = ({cards=[]}) => {
+import type { HandProps } from '@/types/game'
+
+const Hand = ({cards=[]}: HandProps) => {
 
 return <ul className="hand">
     { cards.map((card) => <Card card={card} />) }

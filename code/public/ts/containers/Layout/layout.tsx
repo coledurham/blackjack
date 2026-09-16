@@ -1,8 +1,12 @@
 'use strict'
 
-import React from 'react'
+import React, { ReactNode } from 'react'
 
-const DefaultLayout = ({children}) => {
+interface LayoutProps {
+    children: ReactNode
+}
+
+const DefaultLayout = ({children}: LayoutProps) => {
     return (<div id="content">
         {children}
     </div>)

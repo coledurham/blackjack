@@ -1,10 +1,11 @@
 'use strict'
 
-import { ActionTypes as types} from '../constants.ts'
+import { ActionTypes as types} from '@/constants'
+import type { Shoe, ShoeAction } from '@/types/game'
 
-const defaultState = []
+const defaultState: Shoe = [] as Shoe
 
-const shoe = (state=defaultState, action) => {
+const shoe = (state=defaultState, action: ShoeAction) => {
 
     switch(action.type){
         case types.REQUEST_NEW_SHOE:
@@ -25,7 +26,7 @@ const shoe = (state=defaultState, action) => {
         case types.REQUEST_NEW_SHOE_ERROR:
             return [
                 ...state,
-                ...action.data
+                ...action.data.shoe
             ]
         default:
             return state

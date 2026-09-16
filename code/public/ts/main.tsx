@@ -2,34 +2,39 @@
 
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
+//import { createRoot } from 'react-dom/client'
 
 import { Provider } from 'react-redux'
 import { BrowserRouter } from "react-router-dom"  
-import { AuthProvider, useAuth } from './context/AuthContext.js'
-import { AuthSession } from '../../types/session.js'
+import { AuthProvider, useAuth } from '@/context/AuthContext'
+import type { AuthSession } from '@src-types/session'
 
-import Navigation from './containers/Navigation/navigation.js'
-import Routing from './containers/Navigation/routing.js'
+import Navigation from './containers/Navigation/navigation'
+import Routing from './containers/Navigation/routing'
 
-import Splash from './containers/Splash/splash.js'
+import Splash from './containers/Splash/splash'
 
-import store from './store/configureStore.js'
+import { store } from './store/configureStore'
 
-import Footer from './components/footer.js'
+import Footer from './components/footer'
 
 const App: React.FC = () => {
   const { user, setUser } = useAuth()
 
-  useEffect(async () => {
-    const response: Response = await fetch("/verifyCredentials")
+  useEffect(() => {
+    const verifyCreds = async () => {
+      const response: Response = await fetch("/verifyCredentials")
 
-    if(!response.ok)
-        return
+      if(!response.ok)
+          return
 
-    const authSession: AuthSession = await response.json()
+      const authSession: AuthSession = await response.json()
 
-    if(authSession?.user)
-      setUser(authSession.user)
+      if(authSession?.user)
+        setUser(authSession.user)
+    }
+
+    verifyCreds()
   }, [])
 
   return (!user ?
@@ -48,3 +53,9 @@ const App: React.FC = () => {
 }
 
 ReactDOM.render(<AuthProvider><Provider store={store}><App /></Provider></AuthProvider>, document.getElementById('container'))
+/*const container = document.getElementById('container')
+
+if(container){
+  const root = createRoot(container)
+  root.render(<AuthProvider><Provider store={store}><App /></Provider></AuthProvider>)
+}*/

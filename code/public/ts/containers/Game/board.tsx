@@ -2,21 +2,13 @@
 
 import React from 'react'
 
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '@/store/hooks'
 
-import Hand from '../../components/Game/hand.tsx'
-import Controls from '../../components/Game/controls.tsx'
-import { useAuth } from '../../context/AuthContext.tsx'
+import { CenterBoardProps, PlayerHUDProps } from '@/types/game'
 
-interface CenterBoardProps {
-  winner: string
-}
-
-interface PlayerHUDProps {
-  score: number,
-  bank: number,
-  player: string
-}
+import Hand from '@/components/Game/hand'
+import Controls from '@/components/Game/controls'
+import { useAuth } from '@/context/AuthContext'
 
 const CenterBoard: React.FC<CenterBoardProps> = ({winner}) => {
   return (<div className="centerBoard">
@@ -33,18 +25,18 @@ const PlayerHUD: React.FC<PlayerHUDProps> = ({score, bank, player}) => {
 }
 
 const Board: React.FC = () => {
-  const playerHand = useSelector((store) => store.playerHand)
-  const dealerHand = useSelector((store) => store.dealerHand)
-  const score = useSelector((store) => store.score)
-  const winner  = useSelector((store) => store.winner)
-  const bank = useSelector((store) => store.bank)
+  const playerHand = useAppSelector((store) => store.playerHand)
+  const dealerHand = useAppSelector((store) => store.dealerHand)
+  const score = useAppSelector((store) => store.score)
+  const winner  = useAppSelector((store) => store.winner)
+  const bank = useAppSelector((store) => store.bank)
 
   const { user } = useAuth()
   
   return <div id="content" className="board">
     <div className='dealerHand'>
       <h1>Dealer Hand</h1>
-      <Hand cards={dealerHand}/>
+      <Hand cards={dealerHand ?? []}/>
     </div>
     <CenterBoard winner={winner}/>
     <div className='playerHand'>

@@ -1,19 +1,21 @@
 'use strict'
 
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore, applyMiddleware, AnyAction, Store } from 'redux'
+import thunk, { ThunkDispatch }  from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import { gameMiddleware } from '../middleware/gameMiddleware.ts'
+import { gameMiddleware } from '@/middleware/gameMiddleware'
 
-import rootReducer from '../reducers/index.ts'
+import { rootReducer } from '@/reducers/index'
+
+import type { RootState } from '@/reducers/index'
 
 const logger = createLogger({
     collapsed: true
 })
 
-const store = createStore(
-    rootReducer,
-    applyMiddleware(thunk, logger, gameMiddleware)
-)
+export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
 
-export default store
+export const store = createStore(
+    rootReducer,
+    applyMiddleware(thunk as any, logger as any, gameMiddleware as any)
+) as unknown as Store<RootState, AnyAction> &  { dispatch: AppDispatch }
