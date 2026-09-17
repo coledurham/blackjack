@@ -53,9 +53,3 @@ const App: React.FC = () => {
 }
 
 ReactDOM.render(<AuthProvider><Provider store={store}><App /></Provider></AuthProvider>, document.getElementById('container'))
-/*const container = document.getElementById('container')
-
-if(container){
-  const root = createRoot(container)
-  root.render(<AuthProvider><Provider store={store}><App /></Provider></AuthProvider>)
-}*/

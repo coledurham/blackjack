@@ -78,6 +78,7 @@ footer {
 
 #banner a:last-child {
   flex-grow:0;
+  text-transform: capitalize;
 }
 
 /*
@@ -123,6 +124,7 @@ footer {
   border:1px solid black;
   border-radius:5px;
   text-align:center;
+  text-transform:capitalize;
 }
 
 .board .hud {
